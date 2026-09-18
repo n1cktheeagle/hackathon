@@ -1,0 +1,687 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0739CB48417E39559701A741 /* PlacePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA09EB6AD7EBDF18A6D0D439 /* PlacePhoto.swift */; };
+		1A50A13D1776E1BB751ECC3C /* TripPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309EE96F5685C04A2FF4394 /* TripPlanner.swift */; };
+		1D136FAAE69CA1020C4A95F4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2C652159B115A6FEA1F492 /* Foundation.framework */; };
+		2535B382EE428E495B9A878A /* market.png in Resources */ = {isa = PBXBuildFile; fileRef = 12D87606A23B6F6D414B3990 /* market.png */; };
+		295583926429DAD912FE3191 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DE8C0841E6204A02D9A11A /* Models.swift */; };
+		2DA405A90B436C9112082C0E /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1961323DE89F270233C489A8 /* GoogleMaps */; };
+		2DBE1C36BFA28C682649865C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3012987F2B2943A86CF5E2 /* Persistence.swift */; };
+		3B043D2346E1EBA826554C6A /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106966510BB9DFE9709D72E7 /* Theme.swift */; };
+		3E88881BABB6B7B2BF39A87B /* tredici.png in Resources */ = {isa = PBXBuildFile; fileRef = 80D25230ED2013ECA1EBBCF4 /* tredici.png */; };
+		56488BFC1C7B0954211D5A29 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99177B9A7852B3D11ED3BEB8 /* APIClient.swift */; };
+		598263EF41A7EE8F37696F46 /* capepoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AA5C98F182966531394E8E6 /* capepoint.png */; };
+		8234EECFECB3C8994EBC5955 /* Sheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ACF5AB1BD446C95C77130 /* Sheets.swift */; };
+		88410B417744FBAA51B43FDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C0F1971C724B8428D421451 /* Assets.xcassets */; };
+		8CBB9C7AFADA206C7FE9EFD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2C652159B115A6FEA1F492 /* Foundation.framework */; };
+		8D18A1B4CB7E788BE94A5931 /* DetourUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9CC8F6F2B334C9A0BB97EB /* DetourUITests.swift */; };
+		91EAF2273A83983E5E613C2E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C7DA12D6D62759CB445D5 /* HomeView.swift */; };
+		95BE40736A5AE10E72126418 /* TripMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F573E4200993C6363ABC1141 /* TripMap.swift */; };
+		9D12B15F64263BFACABD7B22 /* AppleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFA0AB51100B9DB1F773DAD /* AppleMapService.swift */; };
+		A28384A9972461D08311794F /* FixtureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B677A8A48BB4D1B3DF169D1 /* FixtureService.swift */; };
+		A53B5D190CDCA3D8D23548E1 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20650608C50E0AA1F5B148D /* LocationService.swift */; };
+		AF1DB15D9E6C8D0313FD9841 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FE8F6D484B01B7F70C6CA /* RootView.swift */; };
+		CEB652350D85A0D372CCF397 /* DetourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD403CFCBE172FB848998C15 /* DetourTests.swift */; };
+		D44C9290AA985C7FCC4FE92B /* DetourApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BFD4CE78104E2E7D8DC981 /* DetourApp.swift */; };
+		D86B5C70B562298C34C222FC /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722B343FDB4EF5A18DF548CC /* AppConfiguration.swift */; };
+		E3FF06A51553F362F3F0DFC4 /* PlannerPanels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD26280477F0F0111316D05 /* PlannerPanels.swift */; };
+		E78AA8676AA4BFAE587F15EC /* peregrine.png in Resources */ = {isa = PBXBuildFile; fileRef = 02A12AE7FDB892628D672676 /* peregrine.png */; };
+		F657D981212CD4BE59942344 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2C652159B115A6FEA1F492 /* Foundation.framework */; };
+		FE9D364785E793382FB69DF7 /* RouteGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B8E5425D7A42B021AB6A69 /* RouteGeometry.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2F46207B13308170F8887CA6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6712CECE4AF038D47E7A9D7C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA3D7DAE59A870C1F5F9BE91;
+			remoteInfo = Detour;
+		};
+		F453D04F62805AD6A4FE973F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6712CECE4AF038D47E7A9D7C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA3D7DAE59A870C1F5F9BE91;
+			remoteInfo = Detour;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02A12AE7FDB892628D672676 /* peregrine.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = peregrine.png; sourceTree = "<group>"; };
+		098FE8F6D484B01B7F70C6CA /* RootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = Features/RootView.swift; sourceTree = "<group>"; };
+		0AA5C98F182966531394E8E6 /* capepoint.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = capepoint.png; sourceTree = "<group>"; };
+		0D3012987F2B2943A86CF5E2 /* Persistence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Persistence.swift; path = Core/Persistence.swift; sourceTree = "<group>"; };
+		106966510BB9DFE9709D72E7 /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = Design/Theme.swift; sourceTree = "<group>"; };
+		12D87606A23B6F6D414B3990 /* market.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = market.png; sourceTree = "<group>"; };
+		19B8E5425D7A42B021AB6A69 /* RouteGeometry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RouteGeometry.swift; path = Core/RouteGeometry.swift; sourceTree = "<group>"; };
+		2AFA0AB51100B9DB1F773DAD /* AppleMapService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppleMapService.swift; path = Services/AppleMapService.swift; sourceTree = "<group>"; };
+		3B677A8A48BB4D1B3DF169D1 /* FixtureService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FixtureService.swift; path = Services/FixtureService.swift; sourceTree = "<group>"; };
+		3C0F1971C724B8428D421451 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		40B9AF77667A976F5C16340E /* Config.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		4BD26280477F0F0111316D05 /* PlannerPanels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlannerPanels.swift; path = Features/PlannerPanels.swift; sourceTree = "<group>"; };
+		555C7DA12D6D62759CB445D5 /* HomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HomeView.swift; path = Features/HomeView.swift; sourceTree = "<group>"; };
+		5A2C652159B115A6FEA1F492 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		5D4ACF5AB1BD446C95C77130 /* Sheets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sheets.swift; path = Features/Sheets.swift; sourceTree = "<group>"; };
+		722B343FDB4EF5A18DF548CC /* AppConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppConfiguration.swift; path = App/AppConfiguration.swift; sourceTree = "<group>"; };
+		74DE8C0841E6204A02D9A11A /* Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Core/Models.swift; sourceTree = "<group>"; };
+		7A9CC8F6F2B334C9A0BB97EB /* DetourUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetourUITests.swift; sourceTree = "<group>"; };
+		80D25230ED2013ECA1EBBCF4 /* tredici.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = tredici.png; sourceTree = "<group>"; };
+		8309EE96F5685C04A2FF4394 /* TripPlanner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TripPlanner.swift; path = Core/TripPlanner.swift; sourceTree = "<group>"; };
+		87BFD4CE78104E2E7D8DC981 /* DetourApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DetourApp.swift; path = App/DetourApp.swift; sourceTree = "<group>"; };
+		99177B9A7852B3D11ED3BEB8 /* APIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = APIClient.swift; path = Services/APIClient.swift; sourceTree = "<group>"; };
+		B8D27F1176533D1B25FE7DDE /* DetourUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DetourUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD403CFCBE172FB848998C15 /* DetourTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetourTests.swift; sourceTree = "<group>"; };
+		CA09EB6AD7EBDF18A6D0D439 /* PlacePhoto.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlacePhoto.swift; path = Design/PlacePhoto.swift; sourceTree = "<group>"; };
+		D20650608C50E0AA1F5B148D /* LocationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocationService.swift; path = Services/LocationService.swift; sourceTree = "<group>"; };
+		EE6E9EFD0A6A8AA73CEEC328 /* DetourTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DetourTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F573E4200993C6363ABC1141 /* TripMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TripMap.swift; path = Features/TripMap.swift; sourceTree = "<group>"; };
+		FC776DBF05C3A9FD1387B91C /* Detour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Detour.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1E1800223886C4C5373581FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F657D981212CD4BE59942344 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A3A038B4C6E39C9FDC3DACF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CBB9C7AFADA206C7FE9EFD1 /* Foundation.framework in Frameworks */,
+				2DA405A90B436C9112082C0E /* GoogleMaps in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF4E8E1FB45BA8A99E9C6561 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D136FAAE69CA1020C4A95F4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0BEDE90983A803408BF2AB30 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC776DBF05C3A9FD1387B91C /* Detour.app */,
+				EE6E9EFD0A6A8AA73CEEC328 /* DetourTests.xctest */,
+				B8D27F1176533D1B25FE7DDE /* DetourUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		13EEDD5BD5568D59ADB3E969 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3C0F1971C724B8428D421451 /* Assets.xcassets */,
+				0AA5C98F182966531394E8E6 /* capepoint.png */,
+				12D87606A23B6F6D414B3990 /* market.png */,
+				02A12AE7FDB892628D672676 /* peregrine.png */,
+				80D25230ED2013ECA1EBBCF4 /* tredici.png */,
+			);
+			name = Resources;
+			path = Detour/Resources;
+			sourceTree = "<group>";
+		};
+		1EC21D8F8DD9DDFCCC249FFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E3D5B121DCB1A04DD301426 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3B038706481CA94887EB63BA /* DetourUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7A9CC8F6F2B334C9A0BB97EB /* DetourUITests.swift */,
+			);
+			name = DetourUITests;
+			path = DetourUITests;
+			sourceTree = "<group>";
+		};
+		3E3D5B121DCB1A04DD301426 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5A2C652159B115A6FEA1F492 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		91372FDD05EEA9D0FFCC9734 = {
+			isa = PBXGroup;
+			children = (
+				0BEDE90983A803408BF2AB30 /* Products */,
+				1EC21D8F8DD9DDFCCC249FFD /* Frameworks */,
+				40B9AF77667A976F5C16340E /* Config.xcconfig */,
+				96F6D095CDACB9F471833EE7 /* Detour */,
+				C3E918D8EE29BEF2DD736B99 /* DetourTests */,
+				3B038706481CA94887EB63BA /* DetourUITests */,
+				13EEDD5BD5568D59ADB3E969 /* Resources */,
+			);
+			sourceTree = "<group>";
+		};
+		96F6D095CDACB9F471833EE7 /* Detour */ = {
+			isa = PBXGroup;
+			children = (
+				722B343FDB4EF5A18DF548CC /* AppConfiguration.swift */,
+				87BFD4CE78104E2E7D8DC981 /* DetourApp.swift */,
+				74DE8C0841E6204A02D9A11A /* Models.swift */,
+				0D3012987F2B2943A86CF5E2 /* Persistence.swift */,
+				19B8E5425D7A42B021AB6A69 /* RouteGeometry.swift */,
+				8309EE96F5685C04A2FF4394 /* TripPlanner.swift */,
+				CA09EB6AD7EBDF18A6D0D439 /* PlacePhoto.swift */,
+				106966510BB9DFE9709D72E7 /* Theme.swift */,
+				555C7DA12D6D62759CB445D5 /* HomeView.swift */,
+				4BD26280477F0F0111316D05 /* PlannerPanels.swift */,
+				098FE8F6D484B01B7F70C6CA /* RootView.swift */,
+				5D4ACF5AB1BD446C95C77130 /* Sheets.swift */,
+				F573E4200993C6363ABC1141 /* TripMap.swift */,
+				99177B9A7852B3D11ED3BEB8 /* APIClient.swift */,
+				2AFA0AB51100B9DB1F773DAD /* AppleMapService.swift */,
+				3B677A8A48BB4D1B3DF169D1 /* FixtureService.swift */,
+				D20650608C50E0AA1F5B148D /* LocationService.swift */,
+			);
+			name = Detour;
+			path = Detour;
+			sourceTree = "<group>";
+		};
+		C3E918D8EE29BEF2DD736B99 /* DetourTests */ = {
+			isa = PBXGroup;
+			children = (
+				BD403CFCBE172FB848998C15 /* DetourTests.swift */,
+			);
+			name = DetourTests;
+			path = DetourTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		343DB24F298BD17576FC7D71 /* DetourTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A035E29BEFFBC286D31AF11 /* Build configuration list for PBXNativeTarget "DetourTests" */;
+			buildPhases = (
+				ADCA790CE9511E16BA33D0B0 /* Sources */,
+				1E1800223886C4C5373581FE /* Frameworks */,
+				56D0ED4DCB2A382DF4B015F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FBA2C3DB630A50B140606D2F /* PBXTargetDependency */,
+			);
+			name = DetourTests;
+			productName = DetourTests;
+			productReference = EE6E9EFD0A6A8AA73CEEC328 /* DetourTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AA3D7DAE59A870C1F5F9BE91 /* Detour */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F06BCB8D40C746C8C98470EA /* Build configuration list for PBXNativeTarget "Detour" */;
+			buildPhases = (
+				7A0777CDBECD1986A3C9BA52 /* Sources */,
+				6A3A038B4C6E39C9FDC3DACF /* Frameworks */,
+				9F7C550FB99CF8E6D6DCE9B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Detour;
+			packageProductDependencies = (
+				1961323DE89F270233C489A8 /* GoogleMaps */,
+			);
+			productName = Detour;
+			productReference = FC776DBF05C3A9FD1387B91C /* Detour.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F6180B098F0056D2E2045C7C /* DetourUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF0DCD4557614FAC6859184F /* Build configuration list for PBXNativeTarget "DetourUITests" */;
+			buildPhases = (
+				0394F429C2E9551D055BD69C /* Sources */,
+				AF4E8E1FB45BA8A99E9C6561 /* Frameworks */,
+				03C3DBAAA0F7DA8CE0B21724 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0F3D0477218FDA8C330420C0 /* PBXTargetDependency */,
+			);
+			name = DetourUITests;
+			productName = DetourUITests;
+			productReference = B8D27F1176533D1B25FE7DDE /* DetourUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6712CECE4AF038D47E7A9D7C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 30B89039EF1E64BA4E5453DA /* Build configuration list for PBXProject "Detour" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 91372FDD05EEA9D0FFCC9734;
+			minimizedProjectReferenceProxies = 0;
+			packageReferences = (
+				974466A03BA72D674B37DE80 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 0BEDE90983A803408BF2AB30 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA3D7DAE59A870C1F5F9BE91 /* Detour */,
+				343DB24F298BD17576FC7D71 /* DetourTests */,
+				F6180B098F0056D2E2045C7C /* DetourUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		03C3DBAAA0F7DA8CE0B21724 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56D0ED4DCB2A382DF4B015F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F7C550FB99CF8E6D6DCE9B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88410B417744FBAA51B43FDF /* Assets.xcassets in Resources */,
+				598263EF41A7EE8F37696F46 /* capepoint.png in Resources */,
+				2535B382EE428E495B9A878A /* market.png in Resources */,
+				E78AA8676AA4BFAE587F15EC /* peregrine.png in Resources */,
+				3E88881BABB6B7B2BF39A87B /* tredici.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0394F429C2E9551D055BD69C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D18A1B4CB7E788BE94A5931 /* DetourUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A0777CDBECD1986A3C9BA52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D86B5C70B562298C34C222FC /* AppConfiguration.swift in Sources */,
+				D44C9290AA985C7FCC4FE92B /* DetourApp.swift in Sources */,
+				295583926429DAD912FE3191 /* Models.swift in Sources */,
+				2DBE1C36BFA28C682649865C /* Persistence.swift in Sources */,
+				FE9D364785E793382FB69DF7 /* RouteGeometry.swift in Sources */,
+				1A50A13D1776E1BB751ECC3C /* TripPlanner.swift in Sources */,
+				0739CB48417E39559701A741 /* PlacePhoto.swift in Sources */,
+				3B043D2346E1EBA826554C6A /* Theme.swift in Sources */,
+				91EAF2273A83983E5E613C2E /* HomeView.swift in Sources */,
+				E3FF06A51553F362F3F0DFC4 /* PlannerPanels.swift in Sources */,
+				AF1DB15D9E6C8D0313FD9841 /* RootView.swift in Sources */,
+				8234EECFECB3C8994EBC5955 /* Sheets.swift in Sources */,
+				95BE40736A5AE10E72126418 /* TripMap.swift in Sources */,
+				56488BFC1C7B0954211D5A29 /* APIClient.swift in Sources */,
+				9D12B15F64263BFACABD7B22 /* AppleMapService.swift in Sources */,
+				A28384A9972461D08311794F /* FixtureService.swift in Sources */,
+				A53B5D190CDCA3D8D23548E1 /* LocationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADCA790CE9511E16BA33D0B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEB652350D85A0D372CCF397 /* DetourTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0F3D0477218FDA8C330420C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Detour;
+			target = AA3D7DAE59A870C1F5F9BE91 /* Detour */;
+			targetProxy = F453D04F62805AD6A4FE973F /* PBXContainerItemProxy */;
+		};
+		FBA2C3DB630A50B140606D2F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Detour;
+			target = AA3D7DAE59A870C1F5F9BE91 /* Detour */;
+			targetProxy = 2F46207B13308170F8887CA6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		049F922B57385A11904CD45C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 40B9AF77667A976F5C16340E /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Detour/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.steph.detour;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		137E6081C0BFBA92515E6E24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 40B9AF77667A976F5C16340E /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Detour/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.steph.detour;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		36CF6095A3C155585729F411 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steph.detour.DetourTests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Detour.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Detour";
+			};
+			name = Debug;
+		};
+		56A4F74CE39034C2602963C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steph.detour.DetourUITests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Detour;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9D673D611A9F4F919B9A4A30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C2ABAB7DC49687AB5623EF34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D2AAA712C37B6708C4412BF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steph.detour.DetourUITests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Detour;
+			};
+			name = Debug;
+		};
+		EB62FAB953A1BE192B89A793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.steph.detour.DetourTests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Detour.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Detour";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30B89039EF1E64BA4E5453DA /* Build configuration list for PBXProject "Detour" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2ABAB7DC49687AB5623EF34 /* Debug */,
+				9D673D611A9F4F919B9A4A30 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A035E29BEFFBC286D31AF11 /* Build configuration list for PBXNativeTarget "DetourTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB62FAB953A1BE192B89A793 /* Release */,
+				36CF6095A3C155585729F411 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF0DCD4557614FAC6859184F /* Build configuration list for PBXNativeTarget "DetourUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56A4F74CE39034C2602963C4 /* Release */,
+				D2AAA712C37B6708C4412BF8 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F06BCB8D40C746C8C98470EA /* Build configuration list for PBXNativeTarget "Detour" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				049F922B57385A11904CD45C /* Release */,
+				137E6081C0BFBA92515E6E24 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		974466A03BA72D674B37DE80 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1961323DE89F270233C489A8 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 974466A03BA72D674B37DE80 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6712CECE4AF038D47E7A9D7C /* Project object */;
+}
