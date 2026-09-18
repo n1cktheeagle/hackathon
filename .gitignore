@@ -1,4 +1,14 @@
 .DS_Store
+.build/
+build/
+DerivedData/
+node_modules/
+dist/
 .env
 .env.*
 !.env.example
+Local.xcconfig
+*.xcuserstate
+xcuserdata/
+.xcodebuildmcp/
+artifacts/

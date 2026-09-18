@@ -1,0 +1,5 @@
+// Copy to Local.xcconfig. Restrict the map key to the app bundle identifier.
+// The $() preserves the double slash in Xcode configuration syntax.
+DETOUR_API_URL = http:/$()/localhost:8080
+GOOGLE_MAPS_API_KEY = your-ios-restricted-key
+DETOUR_ACCESS_TOKEN = your-private-development-token
