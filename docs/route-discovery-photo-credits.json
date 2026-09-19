@@ -1,0 +1,62 @@
+{
+  "book-lounge": {
+    "name": "Nick-D \u00b7 CC BY-SA 4.0",
+    "uri": "https://commons.wikimedia.org/wiki/File:Basement_of_The_Book_Lounge_June_2026.jpg",
+    "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "de-waal": {
+    "name": "Magemu \u00b7 CC BY-SA 4.0",
+    "uri": "https://commons.wikimedia.org/wiki/File:De_Waal_Park_Bench.jpg",
+    "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "green-point": {
+    "name": "warrenski \u00b7 CC BY-SA 2.0",
+    "uri": "https://commons.wikimedia.org/wiki/File:Green_Point_Urban_Park.jpg",
+    "licenseURI": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
+  "company-garden": {
+    "name": "LKD2018 \u00b7 CC BY-SA 4.0",
+    "uri": "https://commons.wikimedia.org/wiki/File:Company%27s_Garden_Cape_Town.jpg",
+    "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "rosetta": {
+    "name": "Rosetta Roastery \u00b7 official venue photo",
+    "uri": "https://www.rosettaroastery.com/pages/locations"
+  },
+  "honest": {
+    "name": "Honest Chocolate \u00b7 official venue photo",
+    "uri": "https://honestchocolate.co.za/honest-chocolate-cafe/"
+  },
+  "a4": {
+    "name": "A4 Arts Foundation \u00b7 official venue photo",
+    "uri": "https://www.a4arts.org/about"
+  },
+  "blue-cafe": {
+    "name": "The Blue Caf\u00e9 \u00b7 photo via CapeTownMagazine",
+    "uri": "https://www.capetownmagazine.com/blue-cafe",
+    "photoURI": "https://www.capetownmagazine.com/media_lib/r2/635950dd29dce7c981946c00d8808ff6.img.jpg"
+  },
+  "clarkes": {
+    "name": "Clarke\u2019s \u00b7 official venue photo",
+    "uri": "https://www.clarkesdining.co.za/clarkes"
+  },
+  "drostdy": {
+    "name": "Josep M. Gracia \u00b7 CC BY-SA 4.0",
+    "uri": "https://commons.wikimedia.org/wiki/File:SWE_-_Drostdy_Museum_in_Swellendam,_South_Africa,_2017.jpg",
+    "licenseURI": "https://creativecommons.org/licenses/by-sa/4.0"
+  },
+  "map-africa": {
+    "name": "Mart Bouter \u00b7 CC BY-SA 3.0",
+    "uri": "https://commons.wikimedia.org/wiki/File:RSA_Wilderness_MapOfAfrica.JPG",
+    "licenseURI": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  "dolphin": {
+    "name": "Axel B\u00fchrmann from Here, South Africa \u00b7 CC BY 4.0",
+    "uri": "https://commons.wikimedia.org/wiki/File:Panorama_-_Dolphin_Point_Overlooking_Wilderness_-_Featured_on_Flickr_Explore._-_Flickr_-_Axel_B%C3%BChrmann.jpg",
+    "licenseURI": "https://creativecommons.org/licenses/by/4.0"
+  },
+  "goukamma": {
+    "name": "Scott Ramsay \u00b7 CapeNature \u00b7 official venue photo",
+    "uri": "https://www.capenature.co.za/reserves/goukamma-nature-reserve"
+  }
+}

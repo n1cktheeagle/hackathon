@@ -1,8 +1,36 @@
+## Latest header, drawer and small-discovery checks · 18 September 2026
+
+Final PR review on 19 September: 21 unit tests and the two affected UI flows passed in `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.19_07-51-23-+0200.xcresult`. The review also validated asset metadata, credential hygiene and diff whitespace; it made the simulator runner executable and removed a custom-stop sheet transition race.
+
+All 21 unit tests passed again after the final quieter-discovery ranking boost in `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.18_23-33-58-+0200.xcresult`. All 21 unit tests and two native UI flows passed in `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.18_23-20-50-+0200.xcresult`. Coverage adds profile-dependent small-discovery ordering, real bundled image availability, venue detail resolution, non-stacked major attractions and added journey time including the stay. The UI checks cover add/skip/save/resume and the header itinerary shortcut, card return, drawer expansion/vertical drag, rating and time breakdown. Following the final estimate-label/photo-height refinement, home/discovery/drawer UI passed again in `Test-Detour-2026.09.18_23-23-18-+0200.xcresult`.
+
+Both affected UI flows passed again in `Test-Detour-2026.09.18_23-37-22-+0200.xcresult`. The subsequent camera-clearance build passed, with normal saved-resume and compact/expanded recommendation screenshots confirming visible markers below the taller header. Live Apple directions showed De Waal Park increasing the total from 17 to 53 minutes (11 extra travel + 25 at the stop). Final captures are `artifacts/hidden-gems/live-*-postfix.png`; before/after and focused comparisons are `final-comparison.png` and `final-detail-comparison.png`.
+
+The current app includes nine Cape Town small discoveries and four actual Garden Route images. Public venue coordinates were checked with Apple's MKLocalSearch; descriptions/addresses and photo sources are recorded in the collection and `docs/route-discovery-photo-credits.json`. Ratings remain the user-authorized mock values. Recommendation time explicitly includes extra travel plus the suggested stay; the shared header total includes accepted stays. The rendered cards retain Apfel, palette, corners and existing buttons. Final settled visual evidence and result are recorded in `design-qa.md`.
+
 # Development verification
+
+## Onboarding and stationary-home polish · 19 September 2026
+
+The interest picker now uses filled SF Symbols for all eight categories, removes the “Made for you” and selection-status copy, and retains the pinned Continue action. Home removes the promotional location pill, uses a quieter medium weight for From/Where to and card headings, labels stationary discovery **Explore Cape Town**, and identifies My Trips with a filled suitcase. Current location still resolves automatically and remains available through the From selector.
+
+Destination rows now keep a short drag gate active through touch-up, preventing an intended scroll from opening a place. The focused onboarding/browsing UI test performs a drag directly on a destination card and verifies that **Where to?** remains presented. All 22 unit tests and that focused UI flow passed in `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.19_09-03-14-+0200.xcresult`. The new unit regression verifies that every interest points to an available filled system symbol. `git diff --check` passes.
+
+Normal Simulator launch was inspected at the onboarding and stationary-home states on iPhone 17 Pro / iOS 26.5. The comparison is `artifacts/polish/final-comparison.png`; implementation captures are `onboarding-after.png` and `home-after.png` in the same folder.
+
+## Latest prototype update · Xcode 26.6
+
+On iPhone 17 Pro / iOS 26.5: the full native run passed **19 unit tests and six UI tests**, with the optional live-network UI check skipped. Result: `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.18_22-21-13-+0200.xcresult`. Coverage includes font registration, detour branch departure/rejoin geometry, interest ranking, local-route eligibility, current-location discovery, offline/partial directions failures, cancellation, add/skip, save/resume, interest editing and large text.
+
+The final map-framing adjustment reserves the complete recommendation-panel height. Its focused home/discovery UI check passed: `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.18_22-27-07-+0200.xcresult`. Normal Simulator launch also showed a live Apple Maps route from Cape Town to Kirstenbosch, four eligible recommendations, a Table Mountain detour with visible departure/rejoin nodes, and readable mock ratings. Source colours, card corners and button styles remain intact; typography uses the requested bundled Apfel Grotezk.
+
+Plan my route keeps one map mounted, animates the returned route, and opens recommendations directly. Orange branches preview proposed detours with dashes and display accepted detours as solid lines. Detours splice into the visible journey and remove the main-road section they replace; a preview can also replace part of an accepted detour. Start/Continue do not force a navigation travel mode. Onboarding remains a three-interest picker on each cold launch; For you/All destination browsing reuses existing photo cards. Mock ratings are presentation-only values requested by the user, without Google attribution. Google services remain unconfigured and unverified.
+
+At the user’s subsequent request, product copy removes all demo/sample captions, the home development badge/settings sheet, fabricated fixture hours and the demo footer in shared itineraries. Offline estimates retain the neutral label Estimated route. This is a wording change, not a switch to live Google data. After the copy and single-route refinements, all 20 unit tests passed in `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.18_22-41-29-+0200.xcresult`. The home/discovery and swipe/add/details UI tests passed in the preceding run (`22-38-59`); onboarding/editing UI also passed in the copy-only run (`22-36-14`). The new geometry test initially found floating-point differences at colour joins; shared junction vertices now snap to the same coordinate and the final unit run passes. These focused runs supplement the earlier full six-UI-test run. Visual evidence is in `artifacts/continuous-map/`; see `design-qa.md`.
 
 Observed on 18 September 2026 with Xcode 26.1.1. This is a working development build with a complete fixture-backed journey and implemented live-service adapters. Google/OpenAI live-service acceptance is still pending credentials. The development app now uses Apple Maps for real mapping and driving routes without credentials.
 
-## Passing checks
+## Earlier passing checks
 
 - SwiftUI app builds and launches on iPhone 17 Pro Simulator with the pinned Google Maps package.
 - Native suite: **8 unit tests and 3 UI tests pass** on iPhone 16e Simulator. The earlier iPhone 17 Pro run passed the seven unit tests and three UI tests present at that point; the disk-reopen test was added afterward.
@@ -43,7 +71,7 @@ Exported screenshots are in the ignored `artifacts/test-attachments/` and `artif
 
 ## Real map update
 
-The development map now uses `MKMapView` with interactive pan/zoom, place markers, numbered stops and road-following route overlays. Apple attribution stays visible above the planning panel. `MKDirections` supplies each driving leg; the app sums their actual duration/distance and checks candidate detours against the current itinerary. Failures show an error and never substitute the previous illustrative route. Cancellation cancels the current directions request. Sample place content remains explicitly separate from real geography and driving estimates.
+The development map now uses `MKMapView` with interactive pan/zoom, place markers, numbered stops and road-following route overlays. Apple attribution stays visible above the planning panel. `MKDirections` supplies each driving leg; the app sums their actual duration/distance and checks candidate detours against the current itinerary. Demo routing now falls back to a labelled illustrative estimate when directions fail; production service failures remain errors. Cancellation cancels the current directions request. Fixture place content remains separate in the implementation from live geography and driving estimates; product demo/sample captions were later removed at the user’s request.
 
 Live route screenshot: `artifacts/live-map-route/A9C338B7-D226-41AE-B125-7AA86471D86D.png`. All 14 native tests (10 unit, 4 UI) passed on iPhone 17 Pro after this change, including a live Apple route, discovery driving checks, and adding a stop to the itinerary. The live check is included in `testLiveAppleMapRoute` and opt-in via `DETOUR_LIVE_MAP_TEST=1` in the test runner environment.
 

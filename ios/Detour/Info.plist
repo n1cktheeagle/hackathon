@@ -9,6 +9,7 @@
 <key>CFBundleShortVersionString</key><string>0.1.0</string>
 <key>CFBundleVersion</key><string>1</string>
 <key>UILaunchScreen</key><dict/>
+<key>UIAppFonts</key><array><string>Fonts/ApfelGrotezk-Regular.otf</string><string>Fonts/ApfelGrotezk-Mittel.otf</string><string>Fonts/ApfelGrotezk-Fett.otf</string></array>
 <key>UIApplicationSceneManifest</key><dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
 <key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string></array>
 <key>NSLocationWhenInUseUsageDescription</key><string>Find your starting point and worthwhile places nearby. You can also choose a starting point manually.</string>

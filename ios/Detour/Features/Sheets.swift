@@ -29,16 +29,19 @@ struct PlaceSearchSheet: View {
                         Button {
                             selectionTask = Task {
                                 do {
-                                    if planner.isDemo { planner.select(Fixtures.capeTown, for: purpose) }
+                                    if ProcessInfo.processInfo.arguments.contains("--uitesting") {
+                                        planner.select(PlaceReference(id: "current-location", name: "Current location", subtitle: "", coordinate: Fixtures.capeTown.coordinate), for: purpose)
+                                    }
                                     else {
                                         let coordinate = try await location.current()
                                         try Task.checkCancellation()
-                                        planner.select(PlaceReference(id: "current-location", name: "my location", subtitle: "Current location", coordinate: coordinate), for: purpose)
+                                        planner.select(PlaceReference(id: "current-location", name: "Current location", subtitle: "Start from here", coordinate: coordinate), for: purpose)
                                     }
                                     dismiss()
                                 } catch { self.error = error.localizedDescription }
                             }
                         } label: { Label("Current location", systemImage: "location").padding(.vertical, 8) }.disabled(location.requesting)
+                            .accessibilityIdentifier("search-current-location").accessibilityLabel("Current location")
                     }
                     if query.isEmpty && planner.isDemo {
                         ForEach([Fixtures.knysna, Fixtures.capeTown, Fixtures.johannesburg, Fixtures.durban]) { place in
@@ -51,7 +54,7 @@ struct PlaceSearchSheet: View {
                         if query.count >= 2 && !searching && results.isEmpty && error == nil { Text("No places found. Try another spelling or a nearby town.").foregroundStyle(DetourTheme.secondary).listRowSeparator(.hidden) }
                     }
                 }.listStyle(.plain).disabled(selecting)
-                if !planner.isDemo { Text("Google Maps").font(.system(.footnote, design: .rounded)).foregroundStyle(DetourTheme.secondary).padding(.bottom, 8) }
+                if !planner.isDemo { Text("Google Maps").font(DetourTheme.font(.footnote)).foregroundStyle(DetourTheme.secondary).padding(.bottom, 8) }
             }
             .navigationTitle(purpose == .origin ? "Starting from" : "Missioning to").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
@@ -111,7 +114,10 @@ struct CustomStopSheet: View {
                     }
                 }
                 Spacer(minLength: 0)
-                PrimaryButton(title: "Use this request") { planner.trip.preferences.customRequest = text.trimmingCharacters(in: .whitespacesAndNewlines); planner.save(); dismiss() }
+                PrimaryButton(title: "Use this request") {
+                    planner.trip.preferences.customRequest = text.trimmingCharacters(in: .whitespacesAndNewlines); planner.save(); dismiss()
+                    if planner.stage != .home { planner.findStops() }
+                }
             }.padding(24).navigationTitle("Custom stop").navigationBarTitleDisplayMode(.inline)
                 .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
                 .onAppear { text = planner.trip.preferences.customRequest }
@@ -121,10 +127,20 @@ struct CustomStopSheet: View {
 struct PreferencesSheet: View {
     @Bindable var planner: TripPlanner
     @Environment(\.dismiss) private var dismiss
+    @State private var initialPreferences = TripPreferences()
+    @State private var initialDeparture = Date()
     var body: some View {
         NavigationStack {
             Form {
-                Section("Your driving day") {
+                Section("Stop for") {
+                    ForEach(StopCategory.allCases) { category in
+                        Toggle(isOn: Binding(get: { planner.trip.preferences.categories.contains(category) }, set: { _ in planner.toggle(category) })) {
+                            Label(category.title, systemImage: category.symbol)
+                        }
+                    }
+                    Button("Describe a custom stop") { planner.sheet = .custom }.accessibilityIdentifier("custom-stop")
+                }
+                Section("Your trip") {
                     DatePicker("Departure", selection: $planner.trip.departure, displayedComponents: [.date, .hourAndMinute])
                     Text(planner.isDemo ? "Times are shown in South African local time. Apple Maps driving estimates can change with traffic." : "Times are shown in South African local time. Driving estimates exclude live traffic.").foregroundStyle(DetourTheme.secondary)
                 }
@@ -135,7 +151,14 @@ struct PreferencesSheet: View {
             }
             .environment(\.timeZone, TimeZone(identifier: "Africa/Johannesburg")!)
             .navigationTitle("Trip preferences").navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { planner.save(); dismiss() } } }
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") {
+                planner.save(); dismiss()
+                if planner.stage != .home && planner.stage != .itinerary {
+                    if initialDeparture != planner.trip.departure { planner.plan() }
+                    else if initialPreferences != planner.trip.preferences { planner.findStops() }
+                }
+            } } }
+            .onAppear { initialPreferences = planner.trip.preferences; initialDeparture = planner.trip.departure }
             .onDisappear { planner.save() }
         }
     }
@@ -156,19 +179,21 @@ struct PlaceDetailsSheet: View {
                 VStack(alignment: .leading, spacing: 20) {
                     PlacePhoto(place: place, service: planner.service, height: 220).clipShape(RoundedRectangle(cornerRadius: 20))
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(place.name).font(.system(.title2, design: .rounded, weight: .semibold))
+                        Text(place.name).font(DetourTheme.font(.title2, weight: .semibold))
                         Text("\(place.category.title) · \(place.subtitle)").foregroundStyle(DetourTheme.secondary)
                     }
                     if let error { MessageBanner(message: error) }
                     if let suggestion {
                         Text(suggestion.reason)
-                        detailRow("Detour", "+\(Int(ceil(suggestion.detourSeconds / 60))) min of driving")
+                        detailRow("Adds to your journey", "About \(suggestion.addedJourneyMinutes) min")
+                        detailRow("Extra travel", "\(Int(ceil(suggestion.detourSeconds / 60))) min")
+                        detailRow("Suggested stay", "\(suggestion.visitMinutes) min")
                         if !suggestion.unverifiedRequirements.isEmpty { Text("Not confirmed: \(suggestion.unverifiedRequirements.joined(separator: ", "))").foregroundStyle(DetourTheme.secondary) }
                     }
-                    if let rating = place.rating { detailRow("Rating", String(format: "%.1f", rating) + (place.ratingCount.map { " from \($0) reviews" } ?? "")) }
-                    detailRow("Hours", place.hours.isEmpty ? "Hours unavailable" : place.hours.joined(separator: "\n"))
+                    if let rating = place.rating ?? (planner.isDemo ? Fixtures.mockRatings[place.id] : nil) { detailRow(planner.isDemo ? "Rating" : "Google rating", String(format: "%.1f", rating) + (place.ratingCount.map { " from \($0) reviews" } ?? "")) }
+                    if !planner.isDemo || !place.hours.isEmpty { detailRow("Hours", place.hours.isEmpty ? "Hours unavailable" : place.hours.joined(separator: "\n")) }
                     if let open = place.openNow { Text(open ? "Open now · check hours for your arrival" : "Closed now · check hours for your arrival").foregroundStyle(DetourTheme.secondary) }
-                    detailRow("Good for", place.amenities.isEmpty ? "Amenities have not been confirmed" : place.amenities.joined(separator: ", "))
+                    if !planner.isDemo || !place.amenities.isEmpty { detailRow("Good for", place.amenities.isEmpty ? "Amenities have not been confirmed" : place.amenities.joined(separator: ", ")) }
                     if let index = stopIndex {
                         Stepper("Stay for \(planner.trip.stops[index].visitMinutes) min", value: $planner.trip.stops[index].visitMinutes, in: 5...240, step: 5)
                             .onChange(of: planner.trip.stops[index].visitMinutes) { _, _ in planner.save() }
@@ -200,8 +225,8 @@ struct PlaceDetailsSheet: View {
                                 else { Text("Photo: \(credit.name)") }
                             }
                             if !place.reviews.isEmpty { Text("Reviews supplied by Google Maps, ordered by relevance.") }
-                        }.font(.system(.footnote, design: .rounded)).foregroundStyle(DetourTheme.secondary)
-                    } else { Text("Demo content from the design. Details and times are illustrative.").font(.system(.subheadline, design: .rounded)).foregroundStyle(DetourTheme.secondary) }
+                        }.font(DetourTheme.font(.footnote)).foregroundStyle(DetourTheme.secondary)
+                    }
                 }.padding(24)
             }
             .safeAreaInset(edge: .bottom) {
@@ -241,7 +266,7 @@ struct SavedTripsSheet: View {
         NavigationStack {
             List {
                 if let error { Text(error).foregroundStyle(.red) }
-                if trips.isEmpty { ContentUnavailableView("Your next mission starts here", systemImage: "bookmark", description: Text("Trips are saved on this iPhone as you plan.")) }
+                if trips.isEmpty { ContentUnavailableView("Your next mission starts here", systemImage: "suitcase.fill", description: Text("Trips are saved on this iPhone as you plan.")) }
                 ForEach(trips) { saved in
                     Button { planner.restore(saved) } label: {
                         VStack(alignment: .leading, spacing: 6) {
@@ -272,18 +297,4 @@ struct SavedTripsSheet: View {
         }
     }
     private func load() { do { trips = try repository.all(isDemo: planner.isDemo) } catch { self.error = error.localizedDescription } }
-}
-struct BuildSettingsSheet: View {
-    @Environment(\.dismiss) private var dismiss
-    var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Take Detour for a spin").font(.system(.title2, design: .rounded, weight: .semibold))
-                Text("The map and driving routes are real, powered by Apple Maps. Stop suggestions and place details are sample content. Try Cape Town to Knysna to explore the complete experience.")
-                Text("Live search and personalised discovery become available when the development build is connected to its services.").foregroundStyle(DetourTheme.secondary)
-                Spacer()
-                PrimaryButton(title: "Back to the mission") { dismiss() }
-            }.padding(24).navigationTitle("Demo mode").navigationBarTitleDisplayMode(.inline)
-        }.presentationDetents([.medium])
-    }
 }

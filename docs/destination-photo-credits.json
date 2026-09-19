@@ -1,0 +1,82 @@
+[
+  {
+    "asset": "destination-aquarium",
+    "author": "Jim.henderson",
+    "license": "CC BY-SA 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Two_Oceans_Aquarium_CT_jeh.jpg",
+    "bytes": 166271
+  },
+  {
+    "asset": "destination-bokaap",
+    "author": "SkyPixels",
+    "license": "CC BY-SA 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Boe-Kaap.jpg",
+    "bytes": 172369
+  },
+  {
+    "asset": "destination-boulders",
+    "author": "Olga Ernst",
+    "license": "CC BY-SA 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Boulders_Beach_Suedafrika.jpg",
+    "bytes": 213516
+  },
+  {
+    "asset": "destination-castle",
+    "author": "Bernard Gagnon",
+    "license": "CC BY-SA 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Castle_of_Good_Hope,_Cape_Town_01.jpg",
+    "bytes": 208197
+  },
+  {
+    "asset": "destination-kirstenbosch",
+    "author": "Discott",
+    "license": "CC BY-SA 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kirstenbosch_National_Botanical_Garden_2024_7th_batch_09.jpg",
+    "bytes": 249306
+  },
+  {
+    "asset": "destination-lionshead",
+    "author": "Daniel Case",
+    "license": "CC BY-SA 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fynbos,_Lion%27s_Head_and_trees_from_Table_Mountain_trail.jpg",
+    "bytes": 237753
+  },
+  {
+    "asset": "destination-stadium",
+    "author": "Hansueli Krapf",
+    "license": "CC-BY-SA-4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source": "https://en.wikipedia.org/wiki/File:South_Africa_-_Cape_Town_Drieankerbaai_from_Lion%27s_head.jpg",
+    "bytes": 258199
+  },
+  {
+    "asset": "destination-tablemountain",
+    "author": "Danie van der Merwe from Cape Town, South Africa",
+    "license": "CC BY 2.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Table_Mountain_DanieVDM.jpg",
+    "bytes": 116695
+  },
+  {
+    "asset": "destination-waterfront",
+    "author": "Daniel Case",
+    "license": "CC BY-SA 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Signal_Hill_and_Ferris_wheel_from_Victoria_Wharf_balcony,_Cape_Town.jpg",
+    "bytes": 192883
+  },
+  {
+    "asset": "destination-zeitz",
+    "author": "Matti Blume",
+    "license": "CC BY-SA 4.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Zeitz_Museum_of_Contemporary_Art_Africa,_Cape_Town_(_1050775).jpg",
+    "bytes": 281699
+  }
+]
