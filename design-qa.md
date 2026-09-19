@@ -135,3 +135,21 @@ P3 follow-up: nearby native markers can overlap at the overview zoom, especially
 Implementation checklist: header integration, shared drawer, itinerary shortcut, small-discovery ranking, non-stacked landmarks, total added-time breakdown, real bundled photographs and post-fix map framing are complete.
 
 Final result: passed
+
+## Onboarding and stationary polish · 19 September 2026
+
+Source truth: the current implementation before this request, captured in `artifacts/destination-browser/onboarding.png` and `artifacts/home-map/home-stationary.png`. Implementation: `artifacts/polish/onboarding-after.png` and `home-after.png`. `artifacts/polish/final-comparison.png` places the matched 402 × 874-point states side by side without cropping or aspect-ratio distortion. The differing clock and remembered origin reflect separate launches and do not affect the reviewed components.
+
+| Required surface | Visible result |
+| --- | --- |
+| Fonts / typography | Apfel remains registered and visible. Semibold UI text now resolves to Apfel Mittel, and From/Where to plus interest-card titles explicitly use the medium role. Bold remains available for the few strongest hierarchy points. |
+| Spacing / layout rhythm | Removing the onboarding badge and footer status row gives the interest grid and CTA a quieter vertical rhythm. Removing the promotional location pill lets the map breathe between route inputs and the stationary discovery drawer. Existing margins, two-column cards, rounded inputs and pinned CTA remain aligned. |
+| Colours / tokens | Existing ink, white, muted grey and map colours are unchanged. Filled category symbols use the current foreground treatment in both selected and unselected cards. |
+| Image quality | Existing attraction photographs and their crops are unchanged; the home card remains sharp at the native card size. |
+| Copy / content | “Made for you,” “Ready to explore,” the 3-of-3 counter and “Your next good stop starts here” are absent. Stationary discovery reads “Explore Cape Town.” My Trips uses a filled suitcase. The route-recommendation state retains “Worth a stop,” where the phrase describes an active journey. |
+
+The destination regression drags directly on a result row and verifies that scrolling leaves the Where to browser open without selecting a destination. The interest-symbol regression verifies that every configured SF Symbol is both filled and available. All 22 unit tests and the focused UI flow passed in `Test-Detour-2026.09.19_09-03-14-+0200.xcresult`.
+
+No actionable P0/P1/P2 findings remain in the reviewed onboarding, stationary home or destination-scroll states. Full VoiceOver, all Dynamic Type sizes and physical-device review remain outside this focused pass.
+
+Final result: passed

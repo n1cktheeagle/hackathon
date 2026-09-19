@@ -8,8 +8,6 @@ struct HomeView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var topHeight: CGFloat = 200
     @State private var bottomHeight: CGFloat = 300
-    @State private var locationMessage: String?
-    @State private var locationTask: Task<Void, Never>?
 
     var body: some View {
         GeometryReader { geometry in
@@ -36,10 +34,8 @@ struct HomeView: View {
                    planner.trip.origin == originalOrigin, planner.trip.destination == originalDestination {
                     selectCurrentLocation(coordinate)
                 }
-            } catch is CancellationError { }
-            catch { if planner.trip.origin == nil { locationMessage = "Choose a starting point, or enable location in Settings." } }
+            } catch { }
         }
-        .onDisappear { locationTask?.cancel() }
     }
 
     private var controls: some View {
@@ -52,22 +48,7 @@ struct HomeView: View {
             .background { GeometryReader { proxy in Color.clear.preference(key: HomeTopHeight.self, value: proxy.size.height) } }
             if dynamicTypeSize.isAccessibilitySize { Color.clear.frame(height: 160) }
             else { Spacer(minLength: 24) }
-            VStack(spacing: 14) {
-                HStack {
-                    if let locationMessage {
-                        Text(locationMessage).font(DetourTheme.font(.footnote))
-                            .padding(12).background(.white, in: RoundedRectangle(cornerRadius: 12))
-                    } else if !dynamicTypeSize.isAccessibilitySize {
-                        Label(planner.trip.origin?.id == "current-location" ? "Start here. Go somewhere good." : "Your next good stop starts here.", systemImage: "sparkles")
-                            .font(DetourTheme.font(.subheadline, weight: .medium))
-                            .padding(.horizontal, 14).padding(.vertical, 11).background(.white, in: Capsule())
-                    }
-                    Spacer(minLength: 8)
-                    CircleButton(symbol: "location.fill", label: "Use current location") { requestLocation() }
-                        .disabled(location.requesting).accessibilityIdentifier("home-current-location")
-                }.padding(.horizontal, 20)
-                discovery
-            }
+            discovery
             .padding(.bottom, 12)
             .background { GeometryReader { proxy in Color.clear.preference(key: HomeBottomHeight.self, value: proxy.size.height) } }
         }
@@ -78,7 +59,7 @@ struct HomeView: View {
             Image("Wordmark").resizable().scaledToFit().frame(width: 78, height: 34).accessibilityLabel("Detour")
                 .padding(.horizontal, 12).padding(.vertical, 5).background(.white, in: Capsule())
             Spacer()
-            CircleButton(symbol: "bookmark", label: "Saved trips") { planner.sheet = .saved }
+            CircleButton(symbol: "suitcase.fill", label: "My trips") { planner.sheet = .saved }
                 .accessibilityIdentifier("saved-trips")
             CircleButton(symbol: "slider.horizontal.3", label: "Your interests") { planner.sheet = .interests }
                 .accessibilityIdentifier("edit-interests")
@@ -108,7 +89,7 @@ struct HomeView: View {
             HStack(spacing: 12) {
                 VStack(alignment: .leading, spacing: 3) {
                     if let label { Text(label).font(DetourTheme.font(.caption)).foregroundStyle(DetourTheme.secondary) }
-                    Text(value).font(DetourTheme.font(.body, weight: .semibold))
+                    Text(value).font(DetourTheme.font(.body, weight: .medium))
                         .multilineTextAlignment(.leading).lineLimit(2)
                 }.frame(maxWidth: .infinity, alignment: .leading)
                 Image(systemName: purpose == .destination ? "magnifyingglass" : "chevron.right")
@@ -122,7 +103,7 @@ struct HomeView: View {
     private var discovery: some View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Worth a stop\(planner.isDemo ? "" : " nearby")").font(DetourTheme.font(.title3, weight: .semibold))
+                Text(planner.isDemo ? "Explore Cape Town" : "Explore nearby").font(DetourTheme.font(.title3, weight: .medium))
                 if !dynamicTypeSize.isAccessibilitySize {
                     Text(planner.isDemo ? "Discover places around Cape Town" : "Find a reason to take the scenic route.")
                         .font(DetourTheme.font(.footnote)).foregroundStyle(DetourTheme.secondary)
@@ -173,20 +154,7 @@ struct HomeView: View {
         .shadow(color: .black.opacity(0.08), radius: 16, y: 4).padding(.horizontal, 12)
     }
 
-    private func requestLocation() {
-        locationTask?.cancel()
-        locationTask = Task {
-            do {
-                let coordinate = try await location.current()
-                try Task.checkCancellation()
-                guard planner.stage == .home, planner.sheet == nil else { return }
-                selectCurrentLocation(coordinate)
-            } catch is CancellationError { }
-            catch { locationMessage = "Choose a starting point, or enable location in Settings." }
-        }
-    }
     private func selectCurrentLocation(_ coordinate: Coordinate) {
-        locationMessage = nil
         recenter()
         planner.select(PlaceReference(id: "current-location", name: "Current location", subtitle: "Start from here", coordinate: coordinate), for: .origin)
     }

@@ -29,8 +29,8 @@ enum DetourTheme {
         return .custom(fontName(resolvedWeight), size: size, relativeTo: style)
     }
     private static func fontName(_ weight: Font.Weight) -> String {
-        if weight == .bold || weight == .semibold || weight == .heavy || weight == .black { return "ApfelGrotezk-Fett" }
-        if weight == .medium { return "ApfelGrotezk-Mittel" }
+        if weight == .bold || weight == .heavy || weight == .black { return "ApfelGrotezk-Fett" }
+        if weight == .medium || weight == .semibold { return "ApfelGrotezk-Mittel" }
         return "ApfelGrotezk-Regular"
     }
 }

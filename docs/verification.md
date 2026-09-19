@@ -10,6 +10,14 @@ The current app includes nine Cape Town small discoveries and four actual Garden
 
 # Development verification
 
+## Onboarding and stationary-home polish · 19 September 2026
+
+The interest picker now uses filled SF Symbols for all eight categories, removes the “Made for you” and selection-status copy, and retains the pinned Continue action. Home removes the promotional location pill, uses a quieter medium weight for From/Where to and card headings, labels stationary discovery **Explore Cape Town**, and identifies My Trips with a filled suitcase. Current location still resolves automatically and remains available through the From selector.
+
+Destination rows now keep a short drag gate active through touch-up, preventing an intended scroll from opening a place. The focused onboarding/browsing UI test performs a drag directly on a destination card and verifies that **Where to?** remains presented. All 22 unit tests and that focused UI flow passed in `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.19_09-03-14-+0200.xcresult`. The new unit regression verifies that every interest points to an available filled system symbol. `git diff --check` passes.
+
+Normal Simulator launch was inspected at the onboarding and stationary-home states on iPhone 17 Pro / iOS 26.5. The comparison is `artifacts/polish/final-comparison.png`; implementation captures are `onboarding-after.png` and `home-after.png` in the same folder.
+
 ## Latest prototype update · Xcode 26.6
 
 On iPhone 17 Pro / iOS 26.5: the full native run passed **19 unit tests and six UI tests**, with the optional live-network UI check skipped. Result: `/tmp/detour-derived-data/Logs/Test/Test-Detour-2026.09.18_22-21-13-+0200.xcresult`. Coverage includes font registration, detour branch departure/rejoin geometry, interest ranking, local-route eligibility, current-location discovery, offline/partial directions failures, cancellation, add/skip, save/resume, interest editing and large text.

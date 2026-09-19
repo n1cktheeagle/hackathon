@@ -171,9 +171,6 @@ struct RecommendationRating: View {
                 if let count = place.ratingCount {
                     Text("\(count.formatted()) reviews").font(DetourTheme.font(.caption2)).foregroundStyle(DetourTheme.secondary)
                 }
-            } else {
-                Label("Curated pick", systemImage: "sparkles").font(DetourTheme.font(.caption2, weight: .medium))
-                    .padding(.horizontal, 8).padding(.vertical, 7).background(DetourTheme.muted, in: Capsule())
             }
         }
     }

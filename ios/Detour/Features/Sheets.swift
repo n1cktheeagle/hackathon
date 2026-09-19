@@ -266,7 +266,7 @@ struct SavedTripsSheet: View {
         NavigationStack {
             List {
                 if let error { Text(error).foregroundStyle(.red) }
-                if trips.isEmpty { ContentUnavailableView("Your next mission starts here", systemImage: "bookmark", description: Text("Trips are saved on this iPhone as you plan.")) }
+                if trips.isEmpty { ContentUnavailableView("Your next mission starts here", systemImage: "suitcase.fill", description: Text("Trips are saved on this iPhone as you plan.")) }
                 ForEach(trips) { saved in
                     Button { planner.restore(saved) } label: {
                         VStack(alignment: .leading, spacing: 6) {

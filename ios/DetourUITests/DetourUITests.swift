@@ -126,6 +126,10 @@ import XCTest
         XCTAssertTrue(zeitz.waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["destination-demo-destination-boulders"].exists)
         let tailored = XCTAttachment(screenshot: app.screenshot()); tailored.name = "For you destinations"; tailored.lifetime = .keepAlways; add(tailored)
+        let scrollStart = zeitz.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.8))
+        scrollStart.press(forDuration: 0.1, thenDragTo: scrollStart.withOffset(CGVector(dx: 0, dy: -120)))
+        XCTAssertTrue(app.navigationBars["Where to?"].exists, "Scrolling a destination row must not select it")
+        XCTAssertFalse(app.buttons["plan-trip"].exists)
         app.buttons["destinations-all"].tap()
         let mountain = app.buttons["destination-demo-destination-table-mountain"]
         XCTAssertTrue(mountain.waitForExistence(timeout: 5))

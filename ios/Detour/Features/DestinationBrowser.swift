@@ -7,6 +7,8 @@ struct DestinationBrowser: View {
     @State private var results: [SearchResult] = []
     @State private var searching = false
     @State private var selecting = false
+    @State private var isListDragging = false
+    @State private var dragResetTask: Task<Void, Never>?
     @State private var sessionToken = UUID().uuidString
     @State private var selectionTask: Task<Void, Never>?
     @State private var error: String?
@@ -62,7 +64,10 @@ struct DestinationBrowser: View {
                         if !externalResults.isEmpty {
                             Text("Search results").font(DetourTheme.font(.subheadline, weight: .semibold)).padding(.top, 12)
                             ForEach(externalResults) { result in
-                                Button { choose(result.id) } label: {
+                                Button {
+                                    guard !isListDragging else { return }
+                                    choose(result.id)
+                                } label: {
                                     HStack(spacing: 14) {
                                         Image(systemName: "mappin.and.ellipse").frame(width: 40, height: 40)
                                             .background(.white, in: RoundedRectangle(cornerRadius: 12))
@@ -89,11 +94,25 @@ struct DestinationBrowser: View {
                             Button("Photo credits") { showingCredits = true }.font(DetourTheme.font(.footnote)).frame(minHeight: 44)
                         } else { Text("Google Maps").font(DetourTheme.font(.footnote)).foregroundStyle(DetourTheme.secondary) }
                     }.padding(.horizontal, 24).padding(.bottom, 24)
-                }.scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
+                }
+                .scrollIndicators(.hidden).scrollDismissesKeyboard(.interactively)
+                .simultaneousGesture(DragGesture(minimumDistance: 6)
+                    .onChanged { _ in
+                        dragResetTask?.cancel()
+                        isListDragging = true
+                    }
+                    .onEnded { _ in
+                        dragResetTask?.cancel()
+                        dragResetTask = Task {
+                            try? await Task.sleep(for: .milliseconds(180))
+                            guard !Task.isCancelled else { return }
+                            isListDragging = false
+                        }
+                    })
             }.padding(.top, 12).background(.white)
                 .navigationTitle("Where to?").navigationBarTitleDisplayMode(.inline)
                 .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
-                .onDisappear { selectionTask?.cancel() }
+                .onDisappear { selectionTask?.cancel(); dragResetTask?.cancel() }
                 .task(id: query) { await search() }
                 .sheet(isPresented: $editingInterests) {
                     NavigationStack {
@@ -132,7 +151,10 @@ struct DestinationBrowser: View {
 
     private func destinationRow(_ idea: DestinationIdea, rank: Int) -> some View {
         let matches = idea.interests.filter { planner.profile.interests.contains($0) }
-        return Button { select(idea.place) } label: {
+        return Button {
+            guard !isListDragging else { return }
+            select(idea.place)
+        } label: {
             PlaceDiscoveryRow(place: idea.place, service: planner.service, rank: rank,
                               detail: idea.summary, badge: personalized ? matches.map(\.title).joined(separator: " · ") : idea.interests.prefix(2).map(\.title).joined(separator: " · "),
                               showGoogleRating: !planner.isDemo, showMockRating: planner.isDemo)

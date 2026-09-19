@@ -11,14 +11,14 @@ enum TravelInterest: String, Codable, CaseIterable, Identifiable, Sendable {
     var title: String { self == .food ? "Food & drink" : rawValue.capitalized }
     var symbol: String {
         switch self {
-        case .arts: "paintpalette"
-        case .culture: "theatermasks"
-        case .wildlife: "pawprint"
-        case .sports: "figure.run"
-        case .nature: "leaf"
-        case .food: "fork.knife"
-        case .history: "building.columns"
-        case .shopping: "bag"
+        case .arts: "paintpalette.fill"
+        case .culture: "theatermasks.fill"
+        case .wildlife: "pawprint.fill"
+        case .sports: "figure.run.circle.fill"
+        case .nature: "leaf.fill"
+        case .food: "fork.knife.circle.fill"
+        case .history: "building.columns.fill"
+        case .shopping: "bag.fill"
         }
     }
     var subtitle: String {

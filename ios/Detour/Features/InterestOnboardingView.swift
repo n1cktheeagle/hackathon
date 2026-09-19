@@ -15,11 +15,7 @@ struct InterestOnboardingView: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    HStack {
-                        Image("Wordmark").resizable().scaledToFit().frame(width: 92, height: 42).accessibilityLabel("Detour")
-                        Spacer()
-                        Label("Made for you", systemImage: "sparkles").font(DetourTheme.font(.caption)).foregroundStyle(DetourTheme.secondary)
-                    }
+                    Image("Wordmark").resizable().scaledToFit().frame(width: 92, height: 42).accessibilityLabel("Detour")
                     VStack(alignment: .leading, spacing: 10) {
                         Text("What draws you out?").font(DetourTheme.font(.largeTitle, weight: .semibold)).accessibilityIdentifier("interest-onboarding-title")
                         Text("Choose 3 interests. We’ll find places worth making a day of.")
@@ -32,16 +28,7 @@ struct InterestOnboardingView: View {
                     }
                 }.padding(24)
             }.scrollIndicators(.hidden)
-            VStack(spacing: 12) {
-                HStack {
-                    Text("\(selected.count) of 3 selected").font(DetourTheme.font(.subheadline, weight: .medium))
-                    Spacer()
-                    if selected.count < 3 {
-                        Text("Choose \(3 - selected.count) more").font(DetourTheme.font(.subheadline)).foregroundStyle(DetourTheme.secondary)
-                    } else {
-                        Label("Ready to explore", systemImage: "checkmark").font(DetourTheme.font(.subheadline)).foregroundStyle(DetourTheme.secondary)
-                    }
-                }
+            VStack {
                 PrimaryButton(title: editing ? "Save interests" : "Continue") {
                     profile.update(selected); onContinue()
                 }.disabled(selected.count != 3).opacity(selected.count == 3 ? 1 : 0.45)
@@ -65,7 +52,7 @@ struct InterestOnboardingView: View {
                         .font(.system(size: 19)).foregroundStyle(active ? .white : DetourTheme.border).accessibilityHidden(true)
                 }
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(interest.title).font(DetourTheme.font(.body, weight: .semibold))
+                    Text(interest.title).font(DetourTheme.font(.body, weight: .medium))
                     Text(interest.subtitle).font(DetourTheme.font(.caption))
                         .foregroundStyle(active ? .white.opacity(0.8) : DetourTheme.secondary)
                         .fixedSize(horizontal: false, vertical: true)

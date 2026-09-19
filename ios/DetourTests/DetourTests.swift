@@ -9,6 +9,12 @@ import UIKit
             XCTAssertNotNil(UIFont(name: name, size: 17), name)
         }
     }
+    func testInterestIconsUseFilledSystemSymbols() {
+        for interest in TravelInterest.allCases {
+            XCTAssertTrue(interest.symbol.hasSuffix(".fill"), interest.rawValue)
+            XCTAssertNotNil(UIImage(systemName: interest.symbol), interest.symbol)
+        }
+    }
     func testInterestProfilePersistsExactlyThreeChoices() throws {
         let name = "DetourTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
