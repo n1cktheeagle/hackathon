@@ -1,0 +1,12 @@
+The Blue Cafe => The Blue Cafe -33.9277577 18.4051054
+The Book Lounge => The Book Lounge -33.92906 18.42156
+A4 Arts Foundation => A4 Arts Foundation -33.927468 18.424139
+Honest Chocolate Cafe => Honest Chocolate Cafe -33.922538 18.4171398
+Rosetta Roastery Bree Street => Rosetta Roastery Cafe -33.9212615 18.4183377
+Clarke's Bree Street => Bree Street -33.92112298803552 18.4181039033259
+De Waal Park => De Waal Park -33.9369493 18.4123371
+Company's Garden => Company's Garden -33.9272153 18.4173344
+Green Point Park => Green Point Urban Park -33.904122 18.401107
+Clarke's Bar & Dining Room -33.922426 18.41713
+
+Queried with MKLocalSearch on 2026-09-18, constrained to Cape Town. Clarke’s exact full name resolved the venue rather than the street. Public venue coordinates are fixtures; no user GPS data is stored in this document.

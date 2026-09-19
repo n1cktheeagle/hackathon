@@ -73,7 +73,7 @@ import MapKit
     }
 }
 
-/// Development still uses explicitly labelled sample places, on a real map and real routes.
+/// Demo places use live directions when available, with labelled offline estimates.
 struct AppleMapDemoService: DetourService {
     let routes: any RouteProviding
     private let fixtures = FixtureService()
@@ -90,7 +90,11 @@ struct AppleMapDemoService: DetourService {
         hydrated.origin = try await resolved(request.origin)
         hydrated.destination = try await resolved(request.destination)
         for index in request.stops.indices { hydrated.stops[index].place = try await resolved(request.stops[index].place) }
-        return try await routes.route(hydrated)
+        do { return try await routes.route(hydrated) }
+        catch {
+            try Task.checkCancellation()
+            return try await fixtures.route(hydrated)
+        }
     }
     func discover(_ input: DiscoveryRequest) -> AsyncThrowingStream<DiscoveryEvent, Error> {
         AsyncThrowingStream { continuation in
@@ -100,30 +104,48 @@ struct AppleMapDemoService: DetourService {
                     let baseline = try await route(baselineInput)
                     let geometry = RouteGeometry.decode(baseline.encodedPolyline)
                     var suggestions: [StopSuggestion] = []
-                    for try await event in fixtures.discover(input) {
+                    var longerDetours: [StopSuggestion] = []
+                    for var suggestion in try fixtures.recommendations(input, geometry: geometry, duration: baseline.durationSeconds) {
                         try Task.checkCancellation()
-                        if event.type == "candidate", var suggestion = event.suggestion {
-                            continuation.yield(DiscoveryEvent(type: "progress", message: "Checking the drive to \(suggestion.place.name)", count: suggestions.count))
-                            let progress = RouteGeometry.progress(suggestion.place.coordinate, along: geometry)
-                            var index = 0
-                            for stop in input.stops {
-                                let coordinate = try await fixtures.details(stop.place.id).coordinate
-                                if RouteGeometry.progress(coordinate, along: geometry) <= progress { index += 1 }
-                            }
-                            var proposed = baselineInput
-                            proposed.stops.insert(RouteStop(place: suggestion.place.point, visitMinutes: suggestion.visitMinutes), at: index)
-                            let result = try await route(proposed)
-                            suggestion.detourSeconds = max(0, result.durationSeconds - baseline.durationSeconds)
-                            guard suggestion.detourSeconds <= Double(input.preferences.maxDetourMinutes * 60) else { continue }
-                            suggestion.insertionIndex = index
-                            suggestion.arrivalOffsetSeconds = result.legs.prefix(index + 1).reduce(0) { $0 + $1.durationSeconds } + Double(input.stops.prefix(index).reduce(0) { $0 + $1.visitMinutes } * 60)
-                            suggestion.reason = "A sample \(suggestion.place.category.title.lowercased()) stop along your journey. Apple Maps estimates \(Int(ceil(suggestion.detourSeconds / 60))) extra minutes of driving."
-                            suggestions.append(suggestion)
-                            continuation.yield(DiscoveryEvent(type: "candidate", suggestion: suggestion))
-                        } else if event.type == "complete" {
-                            continuation.yield(DiscoveryEvent(type: "complete", suggestions: suggestions))
-                        } else if event.type == "warning" { continuation.yield(event) }
+                        continuation.yield(DiscoveryEvent(type: "progress", message: "Checking the drive to \(suggestion.place.name)", count: suggestions.count))
+                        let progress = RouteGeometry.progress(suggestion.place.coordinate, along: geometry)
+                        var index = 0
+                        for stop in input.stops {
+                            let coordinate = try Fixtures.coordinate(stop.place)
+                            if RouteGeometry.progress(coordinate, along: geometry) <= progress { index += 1 }
+                        }
+                        var proposed = baselineInput
+                        proposed.stops.insert(RouteStop(place: suggestion.place.point, visitMinutes: suggestion.visitMinutes), at: index)
+                        let result = try await route(proposed)
+                        let proposedGeometry = RouteGeometry.decode(result.encodedPolyline)
+                        suggestion.detourBranches = await Task.detached { RouteGeometry.detourSegments(proposedGeometry, baseline: geometry) }.value
+                        let estimated = baseline.isIllustrative == true || result.isIllustrative == true
+                        suggestion.detourSeconds = estimated ? Fixtures.estimatedDetour(suggestion.place, geometry: geometry) : max(0, result.durationSeconds - baseline.durationSeconds)
+                        suggestion.insertionIndex = index
+                        suggestion.arrivalOffsetSeconds = result.legs.prefix(index + 1).reduce(0) { $0 + $1.durationSeconds } + Double(input.stops.prefix(index).reduce(0) { $0 + $1.visitMinutes } * 60)
+                        if !suggestion.place.id.hasPrefix("demo-break|") {
+                            let minutes = Int(ceil(suggestion.detourSeconds / 60))
+                            let discovery = RouteDiscoveries.recommendationReason(for: suggestion.place, interests: input.interests) ?? suggestion.reason
+                            suggestion.reason = discovery + " " + (estimated ? "Estimated extra driving time: \(minutes) minutes." : "Apple Maps estimates \(minutes) extra minutes of driving.")
+                        }
+                        if suggestion.detourSeconds > Double(input.preferences.maxDetourMinutes * 60) {
+                            suggestion.reason += " A little beyond your selected detour limit."
+                            longerDetours.append(suggestion)
+                            continue
+                        }
+                        suggestions.append(suggestion)
+                        continuation.yield(DiscoveryEvent(type: "candidate", suggestion: suggestion))
                     }
+                    // Demo preferences are a ranking aid: always offer the closest alternatives.
+                    if suggestions.isEmpty {
+                        suggestions = Array(longerDetours.sorted { $0.detourSeconds < $1.detourSeconds }.prefix(6))
+                        for suggestion in suggestions { continuation.yield(DiscoveryEvent(type: "candidate", suggestion: suggestion)) }
+                    } else if suggestions.count < 6 {
+                        let alternatives = longerDetours.sorted { $0.detourSeconds < $1.detourSeconds }.prefix(6 - suggestions.count)
+                        suggestions.append(contentsOf: alternatives)
+                        for suggestion in alternatives { continuation.yield(DiscoveryEvent(type: "candidate", suggestion: suggestion)) }
+                    }
+                    continuation.yield(DiscoveryEvent(type: "complete", suggestions: suggestions))
                     continuation.finish()
                 } catch { continuation.finish(throwing: error) }
             }

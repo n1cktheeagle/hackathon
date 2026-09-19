@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        D37000000000000000000004 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D37000000000000000000014 /* Fonts */; };
+        D37000000000000000000001 /* DestinationCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37000000000000000000011 /* DestinationCatalog.swift */; };
+        D37000000000000000000002 /* DestinationBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37000000000000000000012 /* DestinationBrowser.swift */; };
+        D37000000000000000000003 /* InterestOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37000000000000000000013 /* InterestOnboardingView.swift */; };
 		0739CB48417E39559701A741 /* PlacePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA09EB6AD7EBDF18A6D0D439 /* PlacePhoto.swift */; };
 		1A50A13D1776E1BB751ECC3C /* TripPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309EE96F5685C04A2FF4394 /* TripPlanner.swift */; };
 		1D136FAAE69CA1020C4A95F4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A2C652159B115A6FEA1F492 /* Foundation.framework */; };
@@ -55,6 +59,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+        D37000000000000000000014 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+        D37000000000000000000011 /* DestinationCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DestinationCatalog.swift; path = Services/DestinationCatalog.swift; sourceTree = "<group>"; };
+        D37000000000000000000012 /* DestinationBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DestinationBrowser.swift; path = Features/DestinationBrowser.swift; sourceTree = "<group>"; };
+        D37000000000000000000013 /* InterestOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InterestOnboardingView.swift; path = Features/InterestOnboardingView.swift; sourceTree = "<group>"; };
 		02A12AE7FDB892628D672676 /* peregrine.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = peregrine.png; sourceTree = "<group>"; };
 		098FE8F6D484B01B7F70C6CA /* RootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = Features/RootView.swift; sourceTree = "<group>"; };
 		0AA5C98F182966531394E8E6 /* capepoint.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = capepoint.png; sourceTree = "<group>"; };
@@ -128,6 +136,7 @@
 		13EEDD5BD5568D59ADB3E969 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+                D37000000000000000000014 /* Fonts */,
 				3C0F1971C724B8428D421451 /* Assets.xcassets */,
 				0AA5C98F182966531394E8E6 /* capepoint.png */,
 				12D87606A23B6F6D414B3990 /* market.png */,
@@ -179,6 +188,9 @@
 		96F6D095CDACB9F471833EE7 /* Detour */ = {
 			isa = PBXGroup;
 			children = (
+                D37000000000000000000011 /* DestinationCatalog.swift */,
+                D37000000000000000000012 /* DestinationBrowser.swift */,
+                D37000000000000000000013 /* InterestOnboardingView.swift */,
 				722B343FDB4EF5A18DF548CC /* AppConfiguration.swift */,
 				87BFD4CE78104E2E7D8DC981 /* DetourApp.swift */,
 				74DE8C0841E6204A02D9A11A /* Models.swift */,
@@ -322,6 +334,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                D37000000000000000000004 /* Fonts in Resources */,
 				88410B417744FBAA51B43FDF /* Assets.xcassets in Resources */,
 				598263EF41A7EE8F37696F46 /* capepoint.png in Resources */,
 				2535B382EE428E495B9A878A /* market.png in Resources */,
@@ -354,6 +367,9 @@
 				0739CB48417E39559701A741 /* PlacePhoto.swift in Sources */,
 				3B043D2346E1EBA826554C6A /* Theme.swift in Sources */,
 				91EAF2273A83983E5E613C2E /* HomeView.swift in Sources */,
+                D37000000000000000000001 /* DestinationCatalog.swift in Sources */,
+                D37000000000000000000002 /* DestinationBrowser.swift in Sources */,
+                D37000000000000000000003 /* InterestOnboardingView.swift in Sources */,
 				E3FF06A51553F362F3F0DFC4 /* PlannerPanels.swift in Sources */,
 				AF1DB15D9E6C8D0313FD9841 /* RootView.swift in Sources */,
 				8234EECFECB3C8994EBC5955 /* Sheets.swift in Sources */,

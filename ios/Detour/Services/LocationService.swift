@@ -5,6 +5,8 @@ import Observation
     private let manager = CLLocationManager()
     private var continuation: CheckedContinuation<Coordinate, Error>?
     var requesting = false
+    var coordinate: Coordinate?
+    var attemptedInitialLocation = false
     override init() { super.init(); manager.delegate = self; manager.desiredAccuracy = kCLLocationAccuracyKilometer }
     func current() async throws -> Coordinate {
         guard !requesting else { throw APIProblem(code: "location_busy", message: "Still finding your location.") }
@@ -40,5 +42,8 @@ import Observation
         finish(.success(Coordinate(latitude: last.coordinate.latitude, longitude: last.coordinate.longitude)))
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) { finish(.failure(error)) }
-    private func finish(_ result: Result<Coordinate, Error>) { continuation?.resume(with: result); continuation = nil }
+    private func finish(_ result: Result<Coordinate, Error>) {
+        if case .success(let coordinate) = result { self.coordinate = coordinate }
+        continuation?.resume(with: result); continuation = nil
+    }
 }

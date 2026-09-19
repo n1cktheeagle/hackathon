@@ -4,7 +4,7 @@ import Observation
 enum PlanningStage { case home, route, finding, suggestions, itinerary }
 enum SearchPurpose: String, Identifiable { case origin, destination; var id: String { rawValue } }
 enum AppSheet: Identifiable {
-    case search(SearchPurpose), custom, preferences, details(PlaceReference), saved, settings
+    case search(SearchPurpose), custom, preferences, details(PlaceReference), saved, interests
     var id: String {
         switch self {
         case .search(let purpose): "search-\(purpose.rawValue)"
@@ -12,17 +12,36 @@ enum AppSheet: Identifiable {
         case .preferences: "preferences"
         case .details(let place): "details-\(place.id)"
         case .saved: "saved"
-        case .settings: "settings"
+        case .interests: "interests"
         }
+    }
+}
+@MainActor @Observable final class TravelerProfile {
+    private let defaults: UserDefaults?
+    private static let key = "detour.travelInterests.v1"
+    private(set) var interests: [TravelInterest]
+    init(defaults: UserDefaults? = nil) {
+        self.defaults = defaults
+        interests = (defaults?.stringArray(forKey: Self.key) ?? []).compactMap(TravelInterest.init(rawValue:))
+        if interests.count != 3 || Set(interests).count != 3 { interests = [] }
+    }
+    func update(_ selection: Set<TravelInterest>) {
+        guard selection.count == 3 else { return }
+        interests = TravelInterest.allCases.filter(selection.contains)
+        defaults?.set(interests.map(\.rawValue), forKey: Self.key)
     }
 }
 @MainActor @Observable final class TripPlanner {
     let service: any DetourService
     let isDemo: Bool
+    let profile: TravelerProfile
+    var showingOnboarding = true
     var trip = TripDraft()
     var stage: PlanningStage = .home
     var sheet: AppSheet?
     var route: RoutePlan?
+    var directRoute: RoutePlan?
+    var detourBranches: [[Coordinate]] = []
     var nearby: [PlaceReference] = []
     var suggestions: [StopSuggestion] = []
     var found: [StopSuggestion] = []
@@ -40,7 +59,7 @@ enum AppSheet: Identifiable {
 
     var current: StopSuggestion? { suggestions.first }
     var suggestionNumber: Int { max(1, batchCount - suggestions.count + 1) }
-    var canDiscover: Bool { !trip.preferences.categories.isEmpty || !trip.preferences.customRequest.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    var canDiscover: Bool { isDemo || !trip.preferences.categories.isEmpty || !trip.preferences.customRequest.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
     var nextPlace: PlaceReference? { trip.stops.first(where: { !$0.visited })?.place ?? trip.destination }
     var shareText: String {
         var lines = ["Detour · \(trip.title)", "\(trip.origin?.name ?? "") → \(trip.destination?.name ?? "")", "Leave \(TripFormat.time(trip.departure))"]
@@ -50,11 +69,11 @@ enum AppSheet: Identifiable {
             lines.append("\(index + 1). \(stop.place.name)\(time) · \(stop.visitMinutes) min")
         }
         lines.append("Plan made with Detour. Driving times are estimates.")
-        if isDemo { lines.append("Demo itinerary · sample content") }
         return lines.joined(separator: "\n")
     }
-    init(service: any DetourService, isDemo: Bool) {
+    init(service: any DetourService, isDemo: Bool, profile: TravelerProfile = TravelerProfile()) {
         self.service = service; self.isDemo = isDemo
+        self.profile = profile
         if isDemo { trip.origin = Fixtures.capeTown }
     }
     func attach(_ repository: TripRepository) { self.repository = repository }
@@ -65,7 +84,7 @@ enum AppSheet: Identifiable {
     func select(_ place: PlaceReference, for purpose: SearchPurpose) {
         cancelWork()
         if purpose == .origin { trip.origin = place } else { trip.destination = place }
-        trip.stops = []; trip.reviewedIDs = []; route = nil; suggestions = []; stage = .home
+        trip.stops = []; trip.reviewedIDs = []; route = nil; directRoute = nil; detourBranches = []; suggestions = []; stage = .home
         sheet = nil; save()
         if purpose == .origin { Task { await loadNearby() } }
     }
@@ -102,18 +121,28 @@ enum AppSheet: Identifiable {
         run { token in
             let result = try await self.service.route(input)
             guard self.valid(token) else { return }
-            self.route = result; self.save()
+            self.route = result
+            if self.trip.stops.isEmpty { self.directRoute = result; self.detourBranches = [] }
+            self.save()
+            try await self.discoverStops(token)
         }
     }
     func findStops() {
+        if isDemo, trip.stops.count >= 12 { showItinerary(); return }
         guard trip.canPlan, canDiscover, trip.stops.count < 12 else {
             errorMessage = trip.stops.count >= 12 ? "This driving day already has twelve stops." : "Choose a category or describe the stop you want."
             return
         }
-        stage = .finding; found = []; suggestions = []; warningMessage = nil
-        progressMessage = "Understanding your kind of stop"
-        let input = DiscoveryRequest(trip: trip)
         run { token in
+            try await self.discoverStops(token)
+        }
+    }
+    private func discoverStops(_ token: UUID) async throws {
+        guard valid(token) else { return }
+        if trip.stops.count >= 12 { stage = .itinerary; return }
+        stage = .finding; found = []; suggestions = []; warningMessage = nil
+        progressMessage = "Looking along your route"
+        let input = DiscoveryRequest(trip: trip, interests: profile.interests)
             for try await event in self.service.discover(input) {
                 guard self.valid(token) else { return }
                 switch event.type {
@@ -128,7 +157,6 @@ enum AppSheet: Identifiable {
                 default: break
                 }
             }
-        }
     }
     func cancelDiscovery() { cancelWork(); stage = .route; found = [] }
     func showFoundStops() {
@@ -163,7 +191,10 @@ enum AppSheet: Identifiable {
             let result = try await self.service.route(input)
             guard self.valid(token) else { return }
             updated.reviewedIDs.append(suggestion.id)
-            self.trip = updated; self.route = result; self.suggestions.removeAll { $0.id == suggestion.id }
+            await self.updateDetourBranches(result, token: token)
+            guard self.valid(token) else { return }
+            self.trip = updated; self.route = result
+            self.suggestions.removeAll { $0.id == suggestion.id }
             self.sheet = nil; self.toast = "\(suggestion.place.name) added"; self.save()
             if self.suggestions.isEmpty { self.stage = .itinerary }
             else { try await self.refreshCurrent(token) }
@@ -182,13 +213,19 @@ enum AppSheet: Identifiable {
         guard let input = proposed.routeRequest else { return }
         let result = try await service.route(input)
         guard valid(token) else { return }
-        suggestion.detourSeconds = max(0, result.durationSeconds - baseline.durationSeconds)
+        let estimated = isDemo && (result.isIllustrative == true || baseline.isIllustrative == true)
+        suggestion.detourSeconds = estimated ? Fixtures.estimatedDetour(suggestion.place, geometry: RouteGeometry.decode(baseline.encodedPolyline)) : max(0, result.durationSeconds - baseline.durationSeconds)
         suggestion.arrivalOffsetSeconds = result.legs.prefix(index + 1).reduce(0) { $0 + $1.durationSeconds } + Double(trip.stops.prefix(index).reduce(0) { $0 + $1.visitMinutes } * 60)
         suggestion.insertionIndex = index
+        let proposedGeometry = RouteGeometry.decode(result.encodedPolyline), baselineGeometry = RouteGeometry.decode(baseline.encodedPolyline)
+        suggestion.detourBranches = await Task.detached { RouteGeometry.detourSegments(proposedGeometry, baseline: baselineGeometry) }.value
+        guard valid(token) else { return }
         if !isDemo {
             suggestion.reason = "A \(suggestion.place.category.rawValue) stop along your journey, adding \(Int(ceil(suggestion.detourSeconds / 60))) min of driving."
+        } else if estimated && !suggestion.id.hasPrefix("demo-break|") {
+            suggestion.reason = (RouteDiscoveries.recommendationReason(for: suggestion.place, interests: profile.interests) ?? "A smaller stop along your journey.") + " Estimated extra driving time: \(Int(ceil(suggestion.detourSeconds / 60))) minutes."
         }
-        if suggestion.detourSeconds > Double(trip.preferences.maxDetourMinutes * 60) {
+        if !isDemo && suggestion.detourSeconds > Double(trip.preferences.maxDetourMinutes * 60) {
             suggestions.removeFirst()
             if suggestions.isEmpty { stage = .itinerary }
             else { try await refreshCurrent(token) }
@@ -201,17 +238,20 @@ enum AppSheet: Identifiable {
             guard let input = updated.routeRequest else { return }
             let result = try await self.service.route(input)
             guard self.valid(token) else { return }
-            self.trip = updated; self.route = result; self.save()
+            await self.updateDetourBranches(result, token: token)
+            guard self.valid(token) else { return }
+            self.trip = updated; self.route = result
+            self.save()
         }
     }
     func visited(_ id: String) {
         guard let index = trip.stops.firstIndex(where: { $0.id == id }) else { return }
         trip.stops[index].visited.toggle(); save()
     }
-    func showItinerary() { cancelWork(); sheet = nil; stage = .itinerary; save() }
+    func showItinerary() { guard !isBusy else { return }; cancelWork(); sheet = nil; stage = .itinerary; save() }
     func newTrip() {
         cancelWork(); trip = TripDraft(); if isDemo { trip.origin = Fixtures.capeTown }
-        route = nil; suggestions = []; found = []; stage = .home; sheet = nil; errorMessage = nil; warningMessage = nil
+        route = nil; directRoute = nil; detourBranches = []; suggestions = []; found = []; stage = .home; sheet = nil; errorMessage = nil; warningMessage = nil
         nearbyRevision = UUID(); nearby = []; loadingNearby = false
         if isDemo { Task { await loadNearby() } }
     }
@@ -234,8 +274,13 @@ enum AppSheet: Identifiable {
             }
             guard let input = restored.routeRequest else { return }
             let route = try await self.service.route(input)
+            var direct = input; direct.stops = []
+            let directRoute = restored.stops.isEmpty ? route : try await self.service.route(direct)
             guard self.valid(token) else { return }
-            self.trip = restored; self.route = route; self.stage = .itinerary; self.sheet = nil
+            self.trip = restored; self.route = route; self.directRoute = directRoute
+            await self.updateDetourBranches(route, token: token)
+            guard self.valid(token) else { return }
+            self.stage = .itinerary; self.sheet = nil
             Task { await self.loadNearby() }
         }
     }
@@ -243,5 +288,11 @@ enum AppSheet: Identifiable {
         if trip.preferences.categories.contains(category) { trip.preferences.categories.removeAll { $0 == category } }
         else { trip.preferences.categories.append(category) }
         save()
+    }
+    private func updateDetourBranches(_ route: RoutePlan, token: UUID) async {
+        let proposed = RouteGeometry.decode(route.encodedPolyline)
+        let baseline = RouteGeometry.decode((directRoute ?? route).encodedPolyline)
+        let branches = await Task.detached { RouteGeometry.detourSegments(proposed, baseline: baseline) }.value
+        if valid(token) { detourBranches = branches }
     }
 }
